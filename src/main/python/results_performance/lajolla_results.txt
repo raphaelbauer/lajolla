@@ -1,0 +1,30 @@
+LAJOLLA RESULT OF 30 and on dir: /home/ra/benchmarking/datasets/cath_50/
+2.79943013191
+LAJOLLA RESULT OF 30 and on dir: /home/ra/benchmarking/datasets/cath_75/
+0.96529006958
+LAJOLLA RESULT OF 30 and on dir: /home/ra/benchmarking/datasets/cath_100/
+0.873674869537
+LAJOLLA RESULT OF 25 and on dir: /home/ra/benchmarking/datasets/cath_50/
+0.814346075058
+LAJOLLA RESULT OF 25 and on dir: /home/ra/benchmarking/datasets/cath_75/
+0.807527065277
+LAJOLLA RESULT OF 25 and on dir: /home/ra/benchmarking/datasets/cath_100/
+0.919938087463
+LAJOLLA RESULT OF 20 and on dir: /home/ra/benchmarking/datasets/cath_50/
+0.906475067139
+LAJOLLA RESULT OF 20 and on dir: /home/ra/benchmarking/datasets/cath_75/
+0.859851837158
+LAJOLLA RESULT OF 20 and on dir: /home/ra/benchmarking/datasets/cath_100/
+0.855093002319
+LAJOLLA RESULT OF 15 and on dir: /home/ra/benchmarking/datasets/cath_50/
+1.00208497047
+LAJOLLA RESULT OF 15 and on dir: /home/ra/benchmarking/datasets/cath_75/
+0.821475982666
+LAJOLLA RESULT OF 15 and on dir: /home/ra/benchmarking/datasets/cath_100/
+0.959367990494
+LAJOLLA RESULT OF 10 and on dir: /home/ra/benchmarking/datasets/cath_50/
+0.81748008728
+LAJOLLA RESULT OF 10 and on dir: /home/ra/benchmarking/datasets/cath_75/
+0.90452003479
+LAJOLLA RESULT OF 10 and on dir: /home/ra/benchmarking/datasets/cath_100/
+0.899830818176

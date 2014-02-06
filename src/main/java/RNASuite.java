@@ -21,17 +21,17 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import ra.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
-import ra.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
-import ra.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
-import ra.lajolla.scoringfunctions.IScoringFunction;
-import ra.lajolla.scoringfunctions.ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE;
-import ra.lajolla.transformation.IFileToStringTranslator;
-import ra.lajolla.transformation.IResidueToStringTransformer;
-import ra.lajolla.transformation.rna.suite.DummySuiteTransformer;
-import ra.lajolla.transformation.rna.suite.PDBRNATranslator;
-import ra.lajolla.transformation.rna.suite.RNASuiteMatchRunner;
-import ra.lajolla.utilities.SystemOutUtils;
+import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
+import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
+import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
+import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
+import com.raphaelbauer.lajolla.scoringfunctions.ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE;
+import com.raphaelbauer.lajolla.transformation.IFileToStringTranslator;
+import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
+import com.raphaelbauer.lajolla.transformation.rna.suite.DummySuiteTransformer;
+import com.raphaelbauer.lajolla.transformation.rna.suite.PDBRNATranslator;
+import com.raphaelbauer.lajolla.transformation.rna.suite.RNASuiteMatchRunner;
+import com.raphaelbauer.lajolla.utilities.SystemOutUtils;
 
 /*
  * 

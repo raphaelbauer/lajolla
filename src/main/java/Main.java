@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import ra.lajolla.utilities.SystemOutUtils;
+import com.raphaelbauer.lajolla.utilities.SystemOutUtils;
 
 public class Main {
 

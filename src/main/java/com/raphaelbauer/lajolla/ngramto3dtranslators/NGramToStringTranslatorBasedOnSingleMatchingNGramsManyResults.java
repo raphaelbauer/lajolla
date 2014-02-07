@@ -47,30 +47,24 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
           IScoringFunction scoringFunction,
           IResidueToStringTransformer residueToStringTransformer) {
 
-		//Chain queryChain = 	Utility.convertAtomArrayToChain(queryChainAtomArray);
-    ArrayList<ResultContainer> allResults
-            = new ArrayList<ResultContainer>();
-		// march through each corresponding stuff and calc RMSD:
-    //System.out.println("number of to be checked possible anchors: "
-    //		+ anchorsQueryTarget.size());
+    ArrayList<ResultContainer> allResults = new ArrayList<>();
+    // march through each corresponding stuff and calc RMSD:
 
     for (int i = 0; i < anchorsQueryTarget.size(); i++) {
 
-			//System.out.println("q:"+anchorsQueryTarget.get(i)[0] + " and t:" + anchorsQueryTarget.get(i)[1]);
-      //System.out.println(i);
-			// collect the possibly matching entries
-      ArrayList<Atom> queryAtomsForSuperposition = new ArrayList<Atom>();
+      // collect the possibly matching entries
+      ArrayList<Atom> queryAtomsForSuperposition = new ArrayList<>();
 
-      ArrayList<Atom> targetAtomsForSuperposition = new ArrayList<Atom>();
+      ArrayList<Atom> targetAtomsForSuperposition = new ArrayList<>();
 
-			//System.out.println(queryChain.getAtomLength() +  " - " + queryChain.getAtomGroups().size());
-			//List<Group> allQueryChainAtomGroups = queryChain
+      //System.out.println(queryChain.getAtomLength() +  " - " + queryChain.getAtomGroups().size());
+      //List<Group> allQueryChainAtomGroups = queryChain
       //		.getAtomGroups();
-			//List<Group> allTargetChainAtomGroups = targetChain
+      //List<Group> allTargetChainAtomGroups = targetChain
       //		.getAtomGroups();
-			// anchor[0] ==> query
+      // anchor[0] ==> query
       // anchor[1] ==> target
-			// step through this n-gram and add the atoms of
+      // step through this n-gram and add the atoms of
       // this n-gram to the superimposer...
       for (int j = 0; j < ngramLength; j++) {
 
@@ -80,7 +74,7 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
         int targetPosition = ((anchorsQueryTarget.get(i)[1] + j)
                 / residueToStringTransformer.getNumberOfCharactersInStringCorrespondToOneResidue());
 
-				// //////////////////////////////////////////////////////
+        // //////////////////////////////////////////////////////
         // looks strange? this is to determine that the position
         // is in the residues. we had problems with suite codes
         // at the end of a suite that do not correspond to
@@ -89,20 +83,6 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
         if ((queryPosition < queryChainAtomArray.size())
                 && (targetPosition < targetChainAtomArray.size())) {
 
-//					Group queryGroup = allQueryChainAtomGroups
-//							.get(queryPosition);
-//
-//					Group targetGroup = allTargetChainAtomGroups
-//							.get(targetPosition);
-					//if ((queryGroup.hasAtom(atomToUseForRefinement))
-          //		&& (targetGroup.hasAtom(atomToUseForRefinement))) {
-//							Atom queryAtomForRefinement;
-//							Atom targetAtomForRefinement;
-//							queryAtomForRefinement = queryGroup
-//									.getAtom(atomToUseForRefinement);
-//
-//							targetAtomForRefinement = targetGroup
-//									.getAtom(atomToUseForRefinement);
           queryAtomsForSuperposition
                   .add(queryChainAtomArray.get(queryPosition));
 
@@ -115,7 +95,7 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
 
       }
 
-			// rotate, shift and check rmsd for all...:
+      // rotate, shift and check rmsd for all...:
       Atom[] queryAtomRefinementArray = Utility
               .convertArrayListAtomsToArray(queryAtomsForSuperposition);
 
@@ -124,9 +104,6 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
 
       try {
 
-				//long start = System.currentTimeMillis();
-				//System.out.println(queryAtomRefinementArray.length);
-				//System.out.println(targetAtomRefinementArray.length);
         if (queryAtomRefinementArray.length > 0
                 && targetAtomRefinementArray.length > 0) {
 
@@ -137,15 +114,11 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
                   queryAtomRefinementArray,
                   targetAtomRefinementArray);
 
-					//System.out.println(rmsd);
-				// System.out.println("time SVD: "
-          // + (System.currentTimeMillis()-start));
           if (Double.isNaN(rmsd)) {
-            // noting..
+            // nothing..
 
           } else {
 
-            //start = System.currentTimeMillis();
             Matrix rotationMatrix = svdSuperimposer.getRotation();
             Atom translationVector = svdSuperimposer.getTranslation();
 
@@ -168,14 +141,14 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
 					// System.out.println("time rotation/translation: "
             // + (System.currentTimeMillis()-start));
 
-					// /////////////////////////////////////////////////////////
+            // /////////////////////////////////////////////////////////
             // refine and score it:
             // /////////////////////////////////////////////////////////
             // [0] = rmsd
             // [1] = score num ofa ligned residues of q / all resiudes
             // of q
             // => based on CA or P
-					//start = System.currentTimeMillis();
+            //start = System.currentTimeMillis();
             int startQueryPositionNGram = (anchorsQueryTarget.get(i)[0]
                     / residueToStringTransformer.getNumberOfCharactersInStringCorrespondToOneResidue());
 
@@ -204,17 +177,11 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
 
             //identical match
             if (scoreContainer.getOverallSCORE() > 0.9999) {
-              //System.out.println("identical!");
               break;
             }
-
-					// System.out.println("time scoring: " +
-            // (System.currentTimeMillis()-start));
-					//System.out.println("SCORE is: " + SCORE);
           }
         }
       } catch (StructureException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
 

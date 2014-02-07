@@ -1,16 +1,3 @@
-/*
- * Copyright (c) Raphael A. Bauer (mechanical.bauer@gmail.com)
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation version 2 of the License.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- */
 
 import java.io.File;
 
@@ -46,7 +33,7 @@ public class PRO {
    */
   public static void main(final String[] args) {
 
-		////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // input files or directories:
     ////////////////////////////////////////////////////////////////////////
     String queryDirOrFile = "";
@@ -55,7 +42,7 @@ public class PRO {
 
     String outputDir = "";
 
-		////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // mini tuning...
     ////////////////////////////////////////////////////////////////////////
     boolean dealWithAllModels = false;
@@ -64,13 +51,13 @@ public class PRO {
 
     int numberOfResultsToWriteOut = 1;
 
-		////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // advanced stuff:
     ////////////////////////////////////////////////////////////////////////
     int advancedNGramSize = 18;
 
-		//int advancedAngleDiscretion = 90;
-		//double advancedScoringRadius = 2.0d;
+    //int advancedAngleDiscretion = 90;
+    //double advancedScoringRadius = 2.0d;
     EScoringFunctionRelativeSettings scoringFunctionRelativeSettings
             = EScoringFunctionRelativeSettings.basedOnSizeOfQueryWhatIsTheTargetInTMSCORE;
 
@@ -84,13 +71,14 @@ public class PRO {
 
       Options opt = new Options();
 
-      opt
-              .addOption("h", "help", false,
-                      "Print help for this application");
+      opt.addOption(
+              "h",
+              "help",
+              false,
+              "Print help for this application");
 
-      opt
-              .addOption("sm", false,
-                      "Score based on smaller structure (symmetric score)");
+      opt.addOption("sm", false,
+              "Score based on smaller structure (symmetric score)");
 
       opt.addOption("t", "target", true, "target pdb file (directory or file)");
 
@@ -156,7 +144,7 @@ public class PRO {
 
         queryDirOrFile = targetDirOfFile;
 
-					//System.exit(1);
+        //System.exit(1);
       } else {
         queryDirOrFile = cl.getOptionValue("q");
 
@@ -192,7 +180,7 @@ public class PRO {
         numberOfResultsToWriteOut = Integer.parseInt(cl.getOptionValue("nr"));
       }
 
-				////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////
       // advanced parameters:
       ////////////////////////////////////////////////////////////////
 //				if (cl.hasOption("za")) {
@@ -208,7 +196,7 @@ public class PRO {
 //
 //					advancedScoringRadius = Integer.parseInt(cl.getOptionValue("zc"));
 //				}
-				// /////////////////////////////////////////////////////////////
+      // /////////////////////////////////////////////////////////////
       // start it:
       // execute();
       // STEP 1: build the index - the sequence db:
@@ -231,7 +219,6 @@ public class PRO {
 
       ProteinMatchRunner.executeSearch(
               advancedNGramSize,
-              //advancedAngleDiscretion, 
               iFileToStringTranslator,
               iResidueToStringTransformer,
               targetDirOfFile,

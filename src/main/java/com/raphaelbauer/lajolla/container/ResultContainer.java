@@ -17,48 +17,35 @@ import org.biojava.bio.structure.Atom;
 import org.biojava.bio.structure.jama.Matrix;
 
 public class ResultContainer {
-	
-	private Atom translationVector;
-	
-	private Matrix rotationMatrix;
-	
-	private ScoreContainer scoreContainer;
-	
-	
 
-	public ResultContainer(
-			Matrix rotationMatrix, 
-			Atom translationVector,
-			ScoreContainer scoreContainer) {
-		
-		super();
-		this.rotationMatrix = rotationMatrix;
-		this.scoreContainer = scoreContainer;
-		
-		this.translationVector = translationVector;
-	}
-	
-	
-	
-	
-	public Atom getTranslationVector() {
-		return translationVector;
-	}
+  private Atom translationVector;
 
-	public Matrix getRotationMatrix() {
-		return rotationMatrix;
-	}
+  private Matrix rotationMatrix;
 
-	public ScoreContainer getScoreContainer() {
-		return this.scoreContainer;
-	}
-	
-	
+  private ScoreContainer scoreContainer;
 
-	
+  public ResultContainer(
+          Matrix rotationMatrix,
+          Atom translationVector,
+          ScoreContainer scoreContainer) {
 
-	
-	
-	
+    super();
+    this.rotationMatrix = rotationMatrix;
+    this.scoreContainer = scoreContainer;
+
+    this.translationVector = translationVector;
+  }
+
+  public Atom getTranslationVector() {
+    return translationVector;
+  }
+
+  public Matrix getRotationMatrix() {
+    return rotationMatrix;
+  }
+
+  public ScoreContainer getScoreContainer() {
+    return this.scoreContainer;
+  }
 
 }

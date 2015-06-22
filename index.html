@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Lajolla : LaJolla is a peer reviewed algorithm for the 3D alignment of RNA and protein structures ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Lajolla</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/raphaelbauer/lajolla">View on GitHub</a>
+
+          <h1 id="project_title">Lajolla</h1>
+          <h2 id="project_tagline">LaJolla is a peer reviewed algorithm for the 3D alignment of RNA and protein structures </h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/raphaelbauer/lajolla/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/raphaelbauer/lajolla/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="lajolla" class="anchor" href="#lajolla" aria-hidden="true"><span class="octicon octicon-link"></span></a>LaJolla</h1>
+
+<p>LaJolla is an algorithm that can superimpose protein and RNA structures.</p>
+
+<p>It's peer reviews and published in Algorithms 2009:</p>
+
+<p>Bauer, R.A.; Rother, K.; Moor, P.; Reinert, K.; Steinke, T.; Bujnicki, J.M.; Preissner, R.<br>
+Fast Structural Alignment of Biomolecules Using a Hash Table, N-Grams and String Descriptors. 
+Algorithms 2009, 2, 692-709.
+<a href="http://www.mdpi.com/1999-4893/2/2/692">http://www.mdpi.com/1999-4893/2/2/692</a></p>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a id="prerequisities" class="anchor" href="#prerequisities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisities</h2>
+
+<p>In order to use LaJolla you need first of all JDK 1.7 upwards. You can then get
+LaJolla here: <a href="https://github.com/raphaelbauer/lajolla/releases/latest">https://github.com/raphaelbauer/lajolla/releases/latest</a></p>
+
+<p>Simply download the file "lajolla.jar" and store it.</p>
+
+<p>Lajolla can operate in 3 different modes. One for superimposing protein structures
+and two for superimposing RNA structures.</p>
+
+<h2>
+<a id="superimposing-proteins" class="anchor" href="#superimposing-proteins" aria-hidden="true"><span class="octicon octicon-link"></span></a>Superimposing proteins</h2>
+
+<p>usage: java -cp lajolla.jar PRO [options]</p>
+
+<pre><code>-am,--allmodels                   Deal with all models (slower) (DEFAULT:
+                                  false)
+-h,--help                         Print help for this application
+-nr,--numres &lt;arg&gt;                Number of results to write out per
+                                  target found: 1)
+-o,--outputdir &lt;arg&gt;              Directory where to store result files
+-q,--query &lt;arg&gt;                  query pdb file (directory or file)
+-ref,--minrefinementscore &lt;arg&gt;   minimum refinement score needed
+                                  (DEFAULT: 0.2)
+-sm                               Score based on smaller structure
+                               (symmetric score)
+-t,--target &lt;arg&gt;                 target pdb file (directory or file)
+-zn,--ngramsize &lt;arg&gt;             ADVANCED: size of ngram window
+                               (DEFAULT: 18)
+</code></pre>
+
+<h2>
+<a id="superimposing-rna-structures-based-on-eta-theta-angles" class="anchor" href="#superimposing-rna-structures-based-on-eta-theta-angles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Superimposing RNA structures (based on eta theta angles)</h2>
+
+<p>usage: java -cp lajolla.jar RNA [options]</p>
+
+<pre><code>-am,--allmodels                   Deal with all models (slower) (DEFAULT:
+                                  false)
+-h,--help                         Print help for this application
+-nr,--numres &lt;arg&gt;                Number of results to write out per
+                                  target found: 1)
+-o,--outputdir &lt;arg&gt;              Directory where to store result files
+-q,--query &lt;arg&gt;                  query pdb file (directory or file)
+-ref,--minrefinementscore &lt;arg&gt;   minimum refinement score needed
+                                  (DEFAULT: 0.2)
+-sm                               Score based on smaller structure
+                                  (symmetric score)
+-t,--target &lt;arg&gt;                 target pdb file (directory or file)
+-zn,--ngramsize &lt;arg&gt;             ADVANCED: size of ngram window
+                                  (DEFAULT: 7)
+</code></pre>
+
+<h2>
+<a id="superimposing-rna-structures-based-suite-angles" class="anchor" href="#superimposing-rna-structures-based-suite-angles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Superimposing RNA structures (based "suite" angles)</h2>
+
+<p>usage: java -cp lajolla.jar RNASuite [options]</p>
+
+<pre><code>-h,--help                         Print help for this application
+-o,--outputdir &lt;arg&gt;              Directory where to store result files
+-q,--query &lt;arg&gt;                  query suite file
+-ref,--minrefinementscore &lt;arg&gt;   minimum refinement score needed
+                                  (DEFAULT: 0.3)
+-t,--target &lt;arg&gt;                 target suite file
+-zn,--ngramsize &lt;arg&gt;             ADVANCED: size of ngram window
+                                  (DEFAULT: 7)
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Lajolla maintained by <a href="https://github.com/raphaelbauer">raphaelbauer</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

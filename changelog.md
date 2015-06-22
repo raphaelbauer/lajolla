@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.2.1
+
+ - Fixed spelling mistake in help files.
+
 ## Version 2.2
 
 - Bump to latest libraries (biojava 3x), Java 1.7...

@@ -118,13 +118,13 @@ public class RNA {
       if (args.length == 0) {
         //System.out.println("cl get arg list length : " + cl.getArgList().size());
         HelpFormatter f = new HelpFormatter();
-        f.printHelp("java -cp lajolla.jar RNAEtaTheta [options]", opt);
+        f.printHelp("java -cp lajolla.jar RNA [options]", opt);
         System.exit(1);
       }
 
       if (cl.hasOption('h')) {
         HelpFormatter f = new HelpFormatter();
-        f.printHelp("java -cp lajolla.jar RNAEtaTheta [options]", opt);
+        f.printHelp("java -cp lajolla.jar RNA [options]", opt);
         System.exit(1);
       }
 

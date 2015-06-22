@@ -33,7 +33,7 @@ public class Main {
             + "2. alignment of RNAs via suite codes: \n"
             + "   type in: java -cp lajolla.jar RNASuite -h\n"
             + "3. alignment of RNAs via eta theta dihedral angles: \n"
-            + "   type in: java -cp lajolla.jar RNAEtaTheta -h\n"
+            + "   type in: java -cp lajolla.jar RNA -h\n"
             + "\n"
             + "\n"
             + "More infos: http://lajolla.sf.net");

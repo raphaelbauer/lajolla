@@ -1,8 +1,8 @@
 package com.raphaelbauer.lajolla.chaingroupfilter;
 
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.ChainImpl;
-import org.biojava.bio.structure.Group;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.ChainImpl;
+import org.biojava.nbio.structure.Group;
 
 import com.raphaelbauer.lajolla.utilities.Utility;
 

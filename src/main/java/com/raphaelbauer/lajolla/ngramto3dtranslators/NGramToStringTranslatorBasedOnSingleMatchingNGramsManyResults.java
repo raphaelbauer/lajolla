@@ -16,14 +16,17 @@ package com.raphaelbauer.lajolla.ngramto3dtranslators;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.biojava.bio.structure.Atom;
-import org.biojava.bio.structure.Calc;
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.SVDSuperimposer;
-import org.biojava.bio.structure.Structure;
-import org.biojava.bio.structure.StructureException;
-import org.biojava.bio.structure.StructureImpl;
-import org.biojava.bio.structure.jama.Matrix;
+import javax.vecmath.Matrix3d;
+import javax.vecmath.Matrix4d;
+import javax.vecmath.Point3d;
+
+import org.biojava.nbio.structure.Atom;
+import org.biojava.nbio.structure.Calc;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.Structure;
+import org.biojava.nbio.structure.StructureImpl;
+import org.biojava.nbio.structure.geometry.SuperPositionSVD;
+import org.biojava.nbio.structure.jama.Matrix;
 
 import com.raphaelbauer.lajolla.container.ResultContainer;
 import com.raphaelbauer.lajolla.container.ScoreContainer;
@@ -107,20 +110,28 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
         if (queryAtomRefinementArray.length > 0
                 && targetAtomRefinementArray.length > 0) {
 
-          SVDSuperimposer svdSuperimposer = new SVDSuperimposer(
-                  queryAtomRefinementArray, targetAtomRefinementArray);
+          // Superimpose the target atoms onto the query (reference) atoms.
+          // BioJava's SVDSuperimposer was removed in the 4.x -> 7.x line; the
+          // replacement operates on Point3d[] and returns a 4x4 transform.
+          Point3d[] queryPoints = Calc.atomsToPoints(queryAtomRefinementArray);
+          Point3d[] targetPoints = Calc.atomsToPoints(targetAtomRefinementArray);
 
-          double rmsd = SVDSuperimposer.getRMS(
-                  queryAtomRefinementArray,
-                  targetAtomRefinementArray);
+          SuperPositionSVD svdSuperimposer = new SuperPositionSVD(false);
+
+          Matrix4d transformation = svdSuperimposer.superpose(
+                  queryPoints, targetPoints);
+
+          double rmsd = svdSuperimposer.getRmsd(queryPoints, targetPoints);
 
           if (Double.isNaN(rmsd)) {
             // nothing..
 
           } else {
 
-            Matrix rotationMatrix = svdSuperimposer.getRotation();
-            Atom translationVector = svdSuperimposer.getTranslation();
+            // Split the 4x4 transform back into the rotation matrix + shift
+            // vector expected by the downstream Calc.rotate / Calc.shift calls.
+            Matrix rotationMatrix = toRotationMatrix(transformation);
+            Atom translationVector = Calc.getTranslationVector(transformation);
 
             //this is done, beacause it makes the cloning easier::
             Chain targetChain = Utility.convertAtomArrayToChain(
@@ -181,7 +192,7 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
             }
           }
         }
-      } catch (StructureException e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
 
@@ -189,6 +200,32 @@ public class NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults
 
     return allResults;
 
+  }
+
+  /**
+   * Extracts the 3x3 rotation part of a 4x4 transformation as a BioJava
+   * {@link Matrix} suitable for {@code Calc.rotate(Structure, Matrix)}.
+   *
+   * <p>The matrix is stored <em>transposed</em>: {@code Calc.rotate} multiplies
+   * the coordinate as a row vector ({@code x' = x * M}), which is the opposite
+   * convention to the column-vector rotation returned by
+   * {@link Matrix4d#getRotationScale}. This matches what the old BioJava
+   * {@code SVDSuperimposer.getRotation()} returned, so the downstream
+   * rotate/shift reproduces the superposition exactly.
+   */
+  private static Matrix toRotationMatrix(final Matrix4d transformation) {
+
+    Matrix3d rotation = new Matrix3d();
+    transformation.getRotationScale(rotation);
+
+    Matrix rotationMatrix = new Matrix(3, 3);
+    for (int row = 0; row < 3; row++) {
+      for (int column = 0; column < 3; column++) {
+        rotationMatrix.set(row, column, rotation.getElement(column, row));
+      }
+    }
+
+    return rotationMatrix;
   }
 
 }

@@ -16,9 +16,9 @@ package com.raphaelbauer.lajolla.scoringfunctions;
 import java.util.BitSet;
 import java.util.List;
 
-import org.biojava.bio.structure.Atom;
-import org.biojava.bio.structure.Calc;
-import org.biojava.bio.structure.StructureException;
+import org.biojava.nbio.structure.Atom;
+import org.biojava.nbio.structure.Calc;
+import org.biojava.nbio.structure.StructureException;
 
 import com.raphaelbauer.lajolla.container.ScoreContainer;
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
@@ -44,8 +44,6 @@ public class ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIde
   //double SCORE;
   // int allAtomsToCheck = 0;
   private int numberOfAtomsSuccessfullyAligned;
-
-  private static BitSet bitSet = new BitSet();
 
   /**
    * Standard constructor => scoring is done according to smaller structure -
@@ -96,7 +94,9 @@ public class ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIde
     tmScoreAdder = 0d;
     numberOfAtomsSuccessfullyAligned = 0;
 
-    bitSet.clear();
+    // Tracks which target atoms have already been matched. Local to this call so
+    // the scoring function carries no shared mutable state between invocations.
+    BitSet bitSet = new BitSet();
 
     //if score according to smaller => maximumatoms to be found == smallerChain.soze()
     //otherwise => chain1.size() chain1 == query Chain
@@ -150,8 +150,7 @@ public class ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIde
 
           } //else {
 
-        } catch (StructureException e) {
-          // TODO Auto-generated catch block
+        } catch (Exception e) {
           e.printStackTrace();
         }
 

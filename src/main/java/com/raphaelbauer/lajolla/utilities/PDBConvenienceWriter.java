@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.Structure;
-import org.biojava.bio.structure.StructureImpl;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.Structure;
+import org.biojava.nbio.structure.StructureImpl;
 
 public class PDBConvenienceWriter {
 
@@ -36,9 +36,9 @@ public class PDBConvenienceWriter {
 		try {
 			
 			Structure newpdb = new StructureImpl();
-			newpdb.setPDBCode("Java");
+			// BioJava 7 validates setPDBCode as a real PDB id; this output file
+			// is a synthetic aligned structure, so we only give it a name.
 			newpdb.setName("Aligned with superrafi");
-			newpdb.setNmr(false);
 
 			
 			ArrayList<Chain> model = new ArrayList<Chain>();
@@ -73,10 +73,8 @@ public class PDBConvenienceWriter {
 			
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

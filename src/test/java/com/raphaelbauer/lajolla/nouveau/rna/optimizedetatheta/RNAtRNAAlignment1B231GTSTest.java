@@ -1,8 +1,10 @@
 package com.raphaelbauer.lajolla.nouveau.rna.optimizedetatheta;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
@@ -20,7 +22,7 @@ import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 // trnas are aligned in the wrong direction...
 //////////////////////////////////////////////////////////////////////////////////////////
 // => no real bug. these are simply two different proteins. or relativel different proteins
-public class RNAtRNAAlignment1B231GTSTest extends TestCase {
+public class RNAtRNAAlignment1B231GTSTest {
 
   static INGramTo3DTranslator ngramTo3DTranslator
           = new NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults();
@@ -33,6 +35,7 @@ public class RNAtRNAAlignment1B231GTSTest extends TestCase {
   static IScoringFunction scoringFunction
           = new ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE();
 
+  @Test
   public void testAlignment1B231GTS() {
 
     String tempDir = "src/test/tmp/";
@@ -86,6 +89,7 @@ public class RNAtRNAAlignment1B231GTSTest extends TestCase {
 //	
 //	
 
+  @Test
   public void testAlignment1GTS1B23() {
 
     int ngramSize = 6;

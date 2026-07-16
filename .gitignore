@@ -1,2 +1,6 @@
 /target
 .svn
+.DS_Store
+
+# Output written by the alignment tests
+/src/test/tmp

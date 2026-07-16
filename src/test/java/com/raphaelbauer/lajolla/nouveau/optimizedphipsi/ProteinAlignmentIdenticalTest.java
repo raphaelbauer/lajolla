@@ -13,9 +13,11 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -28,7 +30,7 @@ import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
 import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class ProteinAlignmentIdenticalTest extends TestCase {
+public class ProteinAlignmentIdenticalTest {
 	
 	
 	static INGramTo3DTranslator ngramTo3DTranslator
@@ -211,6 +213,7 @@ public class ProteinAlignmentIdenticalTest extends TestCase {
 //		
 //	}
 	
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignmentLength15() {
 	
 		
@@ -299,6 +302,7 @@ public class ProteinAlignmentIdenticalTest extends TestCase {
 	}
 	
 
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignmentLength20() {
 	
 		
@@ -390,6 +394,7 @@ public class ProteinAlignmentIdenticalTest extends TestCase {
 	}
 
 	
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignmentLength100() {
 	
 		

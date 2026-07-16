@@ -1,11 +1,11 @@
 package com.raphaelbauer.lajolla;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.CoreMatchers.equalTo;
-import org.junit.Assert;
-import static org.junit.Assert.assertThat;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 import com.raphaelbauer.lajolla.utilities.SwissKnife;
 
 public class SwissKnifeTest {

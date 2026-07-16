@@ -13,10 +13,12 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -29,7 +31,7 @@ import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
 import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class ProteinAlignmentNotAllFoundBugTest extends TestCase {
+public class ProteinAlignmentNotAllFoundBugTest {
 	
 	
 	static INGramTo3DTranslator ngramTo3DTranslator
@@ -47,6 +49,7 @@ public class ProteinAlignmentNotAllFoundBugTest extends TestCase {
 	/**
 	 * test if all 2 chains are crosswise found:
 	 */
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignment() {
 	
 		
@@ -143,6 +146,7 @@ public class ProteinAlignmentNotAllFoundBugTest extends TestCase {
 	 * => even with another pdb entry being present...
 	 * this was a bug as of 2008-10-29
 	 */
+	@Test
 	public void testDifferentChainsAlignment() {
 	
 		

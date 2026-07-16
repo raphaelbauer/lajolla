@@ -1,7 +1,8 @@
+package com.raphaelbauer.lajolla.cli;
 
 import java.io.File;
 
-import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
@@ -14,9 +15,9 @@ import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
 import com.raphaelbauer.lajolla.scoringfunctions.ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE;
 import com.raphaelbauer.lajolla.transformation.IFileToStringTranslator;
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
-import com.raphaelbauer.lajolla.transformation.protein.BetterOptimizedPhiPsiTranslator;
-import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
-import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
+import com.raphaelbauer.lajolla.transformation.rna.etatheta.OptimizedStructureToEtaThetaCharacterTransformer;
+import com.raphaelbauer.lajolla.transformation.rna.etatheta.PDBRNATranslator;
+import com.raphaelbauer.lajolla.transformation.rna.etatheta.RNAEtaThetaMatchRunner;
 import com.raphaelbauer.lajolla.utilities.SystemOutUtils;
 
 /*
@@ -24,7 +25,7 @@ import com.raphaelbauer.lajolla.utilities.SystemOutUtils;
  * @author raphael.andre.bauer@gmail.com
  *
  */
-public class PROBind {
+public class RNA {
 
   /**
    * Main
@@ -54,7 +55,7 @@ public class PROBind {
 		////////////////////////////////////////////////////////////////////////
     // advanced stuff:
     ////////////////////////////////////////////////////////////////////////
-    int advancedNGramSize = 10;
+    int advancedNGramSize = 7;
 
 		//int advancedAngleDiscretion = 90;
 		//double advancedScoringRadius = 2.0d;
@@ -65,7 +66,7 @@ public class PROBind {
 
     SystemOutUtils.showSplashScreen();
 
-    System.out.println("LaJolla PROBind - Protein substructure search based secondary structure");
+    System.out.println("LaJolla RNA - RNA similarity screening and alignment");
 
     try {
 
@@ -96,14 +97,14 @@ public class PROBind {
               + ")");
 
       opt.addOption("nr", "numres", true,
-              "Number of best results to write out: "
+              "Number of results to write out per target found: "
               + numberOfResultsToWriteOut
               + ")");
 
 //			opt.addOption("za", "anglediscretion", true,
 //					"ADVANCED: discretion angle for phi psi (DEFAULT: " 
 //					+ advancedAngleDiscretion
-//							+ ")");		
+//							+ ")");
       opt.addOption("zn", "ngramsize", true,
               "ADVANCED: size of ngram window (DEFAULT: " + advancedNGramSize + ")");
 
@@ -111,20 +112,20 @@ public class PROBind {
 //					"ADVANCED: radius taken for final scoring (DEFAULT: " +
 //					advancedScoringRadius
 //					+ ")");
-      BasicParser parser = new BasicParser();
+      DefaultParser parser = new DefaultParser();
       CommandLine cl = parser.parse(opt, args);
 
       // no arguments given => print help:
       if (args.length == 0) {
         //System.out.println("cl get arg list length : " + cl.getArgList().size());
         HelpFormatter f = new HelpFormatter();
-        f.printHelp("java -cp lajolla.jar PROBind [options]", opt);
+        f.printHelp("java -cp lajolla.jar com.raphaelbauer.lajolla.cli.RNA [options]", opt);
         System.exit(1);
       }
 
       if (cl.hasOption('h')) {
         HelpFormatter f = new HelpFormatter();
-        f.printHelp("java -cp lajolla.jar PROBind [options]", opt);
+        f.printHelp("java -cp lajolla.jar com.raphaelbauer.lajolla.cli.RNA [options]", opt);
         System.exit(1);
       }
 
@@ -194,6 +195,7 @@ public class PROBind {
 //
 //					advancedAngleDiscretion = Integer.parseInt(cl.getOptionValue("za"));
 //				}
+//				
       if (cl.hasOption("zn")) {
 
         advancedNGramSize = Integer.parseInt(cl.getOptionValue("zn"));
@@ -203,12 +205,8 @@ public class PROBind {
 //
 //					advancedScoringRadius = Integer.parseInt(cl.getOptionValue("zc"));
 //				}
-				// /////////////////////////////////////////////////////////////
-      // start it:
-      // execute();
-      // STEP 1: build the index - the sequence db:
       IResidueToStringTransformer iResidueToStringTransformer
-              = new BetterOptimizedPhiPsiTranslator();
+              = new OptimizedStructureToEtaThetaCharacterTransformer();
 
       IScoringFunction scoringFunction
               = new ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE(
@@ -218,13 +216,14 @@ public class PROBind {
               = new NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults();
 
       IFileToStringTranslator iFileToStringTranslator
-              = new PDBProteinTranslator(
+              = new PDBRNATranslator(
                       iResidueToStringTransformer,
                       !dealWithAllModels,
                       scoringFunction,
-                      nGramTo3DTranslator);
+                      nGramTo3DTranslator
+              );
 
-      ProteinMatchRunner.executeSearch(
+      RNAEtaThetaMatchRunner.executeSearch(
               advancedNGramSize,
               iFileToStringTranslator,
               iResidueToStringTransformer,
@@ -235,8 +234,7 @@ public class PROBind {
               minimumRefinementScore,
               numberOfResultsToWriteOut);
 
-      long completeTimeInSecs
-              = (System.currentTimeMillis() - beginTime) / 1000;
+      long completeTimeInSecs = (System.currentTimeMillis() - beginTime) / 1000;
 
       String formattedCompleteTimeTakenInHHMMSS = String
               .format("%1$02d:%2$02d:%3$02d", completeTimeInSecs

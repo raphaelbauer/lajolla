@@ -1,20 +1,18 @@
 package com.raphaelbauer.lajolla;
 
 import java.io.File;
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 
-import org.biojava.bio.structure.Atom;
-import org.biojava.bio.structure.Calc;
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.Structure;
-import org.biojava.bio.structure.StructureImpl;
+import org.biojava.nbio.structure.Atom;
+import org.biojava.nbio.structure.Calc;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.Structure;
+import org.biojava.nbio.structure.StructureImpl;
 
 import com.raphaelbauer.lajolla.chaingroupfilter.IChainGroupFilter;
 import com.raphaelbauer.lajolla.comparators.ResultContainerComparator;
@@ -29,14 +27,9 @@ import com.raphaelbauer.lajolla.utilities.Utility;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SequenceDB implements Serializable {
+public class SequenceDB {
 
-  private static double advancedScoringRadius = 3d;
-
-  /**
-   * Standard serializable constant.
-   */
-  private static final long serialVersionUID = -7829858292457971501L;
+  private static final double advancedScoringRadius = 3d;
 
   /**
    * The important hashtable storing all the sequences as n-grams.
@@ -165,8 +158,8 @@ public class SequenceDB implements Serializable {
      * int[1] position in target (in DB)
      *
      */
-    Hashtable<Integer, ArrayList<int[]>> thisQueryMapping
-            = new Hashtable<Integer, ArrayList<int[]>>();
+    HashMap<Integer, ArrayList<int[]>> thisQueryMapping
+            = new HashMap<Integer, ArrayList<int[]>>();
 
     ////////////////////////////////////////////////////////////////////////
     // Scan through hasthtable with n-grams:

@@ -13,10 +13,12 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -29,7 +31,7 @@ import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
 import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class BindingSiteDetectionSimpleIdenticalFrom1C4KTest extends TestCase {
+public class BindingSiteDetectionSimpleIdenticalFrom1C4KTest {
 	
 	
 	static INGramTo3DTranslator ngramTo3DTranslator
@@ -43,6 +45,7 @@ public class BindingSiteDetectionSimpleIdenticalFrom1C4KTest extends TestCase {
 
 	
 	
+	@Test
 	public void testFindIdenticalBindingSiteof1C4K_length10() {
 	
 		

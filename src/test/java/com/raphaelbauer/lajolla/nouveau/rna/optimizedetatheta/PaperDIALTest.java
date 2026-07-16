@@ -1,8 +1,10 @@
 package com.raphaelbauer.lajolla.nouveau.rna.optimizedetatheta;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
@@ -15,9 +17,7 @@ import com.raphaelbauer.lajolla.transformation.rna.etatheta.RNAEtaThetaMatchRunn
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.CoreMatchers.equalTo;
-import org.junit.Assert;
-import static org.junit.Assert.assertThat;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PaperDIALTest {
 

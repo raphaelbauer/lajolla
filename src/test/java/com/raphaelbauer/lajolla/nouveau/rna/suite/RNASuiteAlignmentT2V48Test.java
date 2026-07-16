@@ -13,10 +13,12 @@
  */
 package com.raphaelbauer.lajolla.nouveau.rna.suite;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
@@ -28,7 +30,7 @@ import com.raphaelbauer.lajolla.transformation.rna.suite.PDBRNATranslator;
 import com.raphaelbauer.lajolla.transformation.rna.suite.RNASuiteMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class RNASuiteAlignmentT2V48est extends TestCase {
+public class RNASuiteAlignmentT2V48Test {
 	
 	
 	static IScoringFunction scoringFunction = new ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE();
@@ -45,6 +47,7 @@ public class RNASuiteAlignmentT2V48est extends TestCase {
 	 * 
 	 * 
 	 */
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignment() {
 		 
 		String tempDir = "src/test/tmp"; 

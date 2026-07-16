@@ -13,8 +13,8 @@
  */
 package com.raphaelbauer.lajolla.container;
 
-import org.biojava.bio.structure.Atom;
-import org.biojava.bio.structure.jama.Matrix;
+import org.biojava.nbio.structure.Atom;
+import org.biojava.nbio.structure.jama.Matrix;
 
 public class ResultContainer {
 

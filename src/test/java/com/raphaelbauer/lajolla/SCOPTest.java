@@ -13,10 +13,12 @@
  */
 package com.raphaelbauer.lajolla;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.raphaelbauer.lajolla.utilities.SCOP;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SCOPTest {
 

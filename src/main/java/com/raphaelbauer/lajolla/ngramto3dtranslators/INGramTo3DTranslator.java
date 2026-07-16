@@ -3,7 +3,7 @@ package com.raphaelbauer.lajolla.ngramto3dtranslators;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.biojava.bio.structure.Atom;
+import org.biojava.nbio.structure.Atom;
 
 import com.raphaelbauer.lajolla.container.ResultContainer;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;

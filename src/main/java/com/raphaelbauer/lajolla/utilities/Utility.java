@@ -55,13 +55,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.biojava.bio.structure.Atom;
-import org.biojava.bio.structure.Calc;
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.ChainImpl;
-import org.biojava.bio.structure.Group;
-import org.biojava.bio.structure.HetatomImpl;
-import org.biojava.bio.structure.StructureException;
+import org.biojava.nbio.structure.Atom;
+import org.biojava.nbio.structure.Calc;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.ChainImpl;
+import org.biojava.nbio.structure.Group;
+import org.biojava.nbio.structure.HetatomImpl;
+import org.biojava.nbio.structure.StructureException;
 
 public class Utility {
 
@@ -130,7 +130,7 @@ public class Utility {
       Group group = new HetatomImpl();
       // we have to add this. Otherwise cloning does not work (yields a NPE);
 
-      group.setPDBCode("NAN");
+      group.setResidueNumber("A", 1, null);
 
       group.addAtom(atom);
 
@@ -179,6 +179,27 @@ public class Utility {
   // - so the custom functions eat also hetatoms and try to calculate phi psis...
   ////////////////////////////////////////////////////////////////////////////
   /**
+   * Returns the named atom of a group, throwing a {@link StructureException}
+   * when it is absent.
+   *
+   * <p>BioJava 3's {@code Group.getAtom(String)} threw a StructureException for
+   * a missing atom; BioJava 7 returns {@code null} instead. The angle and
+   * connectivity helpers below rely on the throwing behaviour (their callers
+   * catch StructureException to skip residues with incomplete backbones), so we
+   * restore it here.
+   */
+  private static Atom requireAtom(Group group, String atomName)
+          throws StructureException {
+
+    Atom atom = group.getAtom(atomName);
+    if (atom == null) {
+      throw new StructureException("atom " + atomName
+              + " not found in group " + group.getPDBName());
+    }
+    return atom;
+  }
+
+  /**
    * phi angle.
    *
    * @param a an AminoAcid object
@@ -201,10 +222,10 @@ public class Utility {
       throw new StructureException("can not calc Phi - AminoAcids are not connected!");
     }
 
-    Atom a_C = a.getAtom("C");
-    Atom b_N = b.getAtom("N");
-    Atom b_CA = b.getAtom("CA");
-    Atom b_C = b.getAtom("C");
+    Atom a_C = requireAtom(a, "C");
+    Atom b_N = requireAtom(b, "N");
+    Atom b_CA = requireAtom(b, "CA");
+    Atom b_C = requireAtom(b, "C");
 
     double phi = Calc.torsionAngle(a_C, b_N, b_CA, b_C);
     return phi;
@@ -234,10 +255,10 @@ public class Utility {
 
     }
 
-    Atom a_N = a.getAtom("N");
-    Atom a_CA = a.getAtom("CA");
-    Atom a_C = a.getAtom("C");
-    Atom b_N = b.getAtom("N");
+    Atom a_N = requireAtom(a, "N");
+    Atom a_CA = requireAtom(a, "CA");
+    Atom a_C = requireAtom(a, "C");
+    Atom b_N = requireAtom(b, "N");
 
     double psi = Calc.torsionAngle(a_N, a_CA, a_C, b_N);
     return psi;
@@ -255,8 +276,8 @@ public class Utility {
    */
   public static boolean isConnectedAminoAcid(Group a, Group b)
           throws StructureException {
-    Atom C = a.getAtom("C");
-    Atom N = b.getAtom("N");
+    Atom C = requireAtom(a, "C");
+    Atom N = requireAtom(b, "N");
 
     // one could also check if the CA atoms are < 4 A...
     double distance = Calc.getDistance(C, N);
@@ -285,12 +306,12 @@ public class Utility {
 
     if (!isConnectedNucleotide(a, b)) {
       throw new StructureException("can not calc eta - nucleotides a ("
-              + a.getPDBCode() + ") b (" + b.getPDBCode() + ") are not connected!");
+              + a.getResidueNumber() + ") b (" + b.getResidueNumber() + ") are not connected!");
     }
 
     if (!isConnectedNucleotide(b, c)) {
       throw new StructureException("can not calc eta - nucleotides b ("
-              + b.getPDBCode() + ") c (" + c.getPDBCode() + ") are not connected!");
+              + b.getResidueNumber() + ") c (" + c.getResidueNumber() + ") are not connected!");
     }
 
     if (!isNucleotideOrNucleotideDerivate(a)) {
@@ -310,11 +331,11 @@ public class Utility {
        /////////////////////////////////////////////////////////////////////////
     // calculate pseuo dihedral angles
     /////////////////////////////////////////////////////////////////////////
-    Atom a_C4_minus_1 = a.getAtom("C4'");
-    Atom b_P = b.getAtom("P");
+    Atom a_C4_minus_1 = requireAtom(a, "C4'");
+    Atom b_P = requireAtom(b, "P");
 
-    Atom b_C4 = b.getAtom("C4'");
-    Atom c_P_plus_1 = c.getAtom("P");
+    Atom b_C4 = requireAtom(b, "C4'");
+    Atom c_P_plus_1 = requireAtom(c, "P");
 
     double eta = Calc.torsionAngle(a_C4_minus_1, b_P, b_C4, c_P_plus_1);
     //System.out.println("eta: " + eta);
@@ -354,11 +375,11 @@ public class Utility {
         ////////////////////////////////////////////////////////////////////////
     // calc the pseudo angle:
     //////////////////////////////////////////////////////////////////////// 
-    Atom a_P = b.getAtom("P");
-    Atom a_C4 = b.getAtom("C4'");
+    Atom a_P = requireAtom(b, "P");
+    Atom a_C4 = requireAtom(b, "C4'");
 
-    Atom b_P = c.getAtom("P");
-    Atom b_C4 = c.getAtom("C4'");
+    Atom b_P = requireAtom(c, "P");
+    Atom b_C4 = requireAtom(c, "C4'");
 
     double theta = Calc.torsionAngle(a_P, a_C4, b_P, b_C4);
     //System.out.println("theta: " + theta);
@@ -377,8 +398,8 @@ public class Utility {
    */
   public static boolean isConnectedNucleotide(HetatomImpl a, HetatomImpl b)
           throws StructureException {
-    Atom a_P = a.getAtom("P");
-    Atom b_P = b.getAtom("P");
+    Atom a_P = requireAtom(a, "P");
+    Atom b_P = requireAtom(b, "P");
 
     //check if Ps are only 8 A from each other...
     double distance = Calc.getDistance(a_P, b_P);
@@ -431,13 +452,11 @@ public class Utility {
 
       Group g = chain.getAtomGroup(i);
 
-      try {
-
-        returnAtomArray.add(g.getAtom(atomUsedForRefinement));
-
-      } catch (StructureException e) {
-					// TODO Auto-generated catch block
-        // e.printStackTrace();
+      // BioJava 7's getAtom(String) returns null (instead of throwing) when the
+      // group has no such atom; skip those to keep the original behaviour.
+      Atom atom = g.getAtom(atomUsedForRefinement);
+      if (atom != null) {
+        returnAtomArray.add(atom);
       }
 
     }

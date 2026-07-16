@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 /**
@@ -35,9 +38,10 @@ import java.util.regex.Pattern;
  *
  */
 public class SuiteFile {
-	
-	
-	ArrayList<SuiteFileEntry> allBuckets 
+
+	private static final Logger LOG = LoggerFactory.getLogger(SuiteFile.class);
+
+	ArrayList<SuiteFileEntry> allBuckets
 		= new ArrayList<SuiteFileEntry>();
 	
 	
@@ -109,9 +113,9 @@ public class SuiteFile {
 		        in.close();
 		        
 		        } catch (Exception e){
-		        	
-		          System.err.println("Error: " + e.getMessage());
-		          
+
+		          LOG.error("Could not read suite file", e);
+
 		        }
 		        
 		        

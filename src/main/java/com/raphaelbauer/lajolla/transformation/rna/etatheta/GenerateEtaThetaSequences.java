@@ -8,13 +8,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.Structure;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.GroupType;
+import org.biojava.nbio.structure.Structure;
 
 import com.raphaelbauer.lajolla.utilities.RecursiveFileCollector;
 import com.raphaelbauer.lajolla.utilities.SwissKnife;
@@ -70,7 +71,7 @@ public class GenerateEtaThetaSequences {
               "ADVANCED: discretion angle for phi psi (DEFAULT: "
               + advancedAngleDiscretion + ")");
 
-      BasicParser parser = new BasicParser();
+      DefaultParser parser = new DefaultParser();
       CommandLine cl = parser.parse(opt, args);
 
       // no arguments given => print help:
@@ -146,10 +147,8 @@ public class GenerateEtaThetaSequences {
         pw.close();
 
       } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
 
@@ -173,7 +172,7 @@ public class GenerateEtaThetaSequences {
           String rootDirectorOrFile,
           boolean onlyParseFirstModel) {
 
-    StringBuffer returnStringBuffer = new StringBuffer();
+    StringBuilder returnStringBuffer = new StringBuilder();
 
     OptimizedStructureToEtaThetaCharacterTransformer anglesCalc
             = new OptimizedStructureToEtaThetaCharacterTransformer();
@@ -231,7 +230,7 @@ public class GenerateEtaThetaSequences {
             String angleSequence = anglesCalc
                     .getStringFromResidues(chains
                             .get(chainNr).getAtomGroups(
-                                    "nucleotide"));
+                                    GroupType.NUCLEOTIDE));
 						// System.out.println("size: " + angleSequence.length()
             // + " " + angleSequence);
 

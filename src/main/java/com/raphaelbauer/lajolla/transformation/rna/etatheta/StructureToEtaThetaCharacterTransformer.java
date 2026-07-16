@@ -2,9 +2,9 @@ package com.raphaelbauer.lajolla.transformation.rna.etatheta;
 
 import java.util.List;
 
-import org.biojava.bio.structure.Group;
-import org.biojava.bio.structure.HetatomImpl;
-import org.biojava.bio.structure.StructureException;
+import org.biojava.nbio.structure.Group;
+import org.biojava.nbio.structure.HetatomImpl;
+import org.biojava.nbio.structure.StructureException;
 
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
 import com.raphaelbauer.lajolla.utilities.Utility;
@@ -99,7 +99,7 @@ public class StructureToEtaThetaCharacterTransformer
   public final String getStringFromResidues(final List<Group> nucleotidesAndSimilarMolecules) {
 
     // for the return...
-    StringBuffer translatedAngleSeq = new StringBuffer();
+    StringBuilder translatedAngleSeq = new StringBuilder();
 
     // expected lengt
     int nucleotideLength = nucleotidesAndSimilarMolecules.size();

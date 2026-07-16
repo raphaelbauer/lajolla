@@ -1,14 +1,16 @@
 package com.raphaelbauer.lajolla.utilities;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.raphaelbauer.lajolla.utilities.Utility;
-import junit.framework.TestCase;
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.CoreMatchers.equalTo;
-import org.junit.Assert;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-public class UtilityTest extends TestCase {
+public class UtilityTest {
 
+  @Test
   public void testScoring() {
 
     assertThat(

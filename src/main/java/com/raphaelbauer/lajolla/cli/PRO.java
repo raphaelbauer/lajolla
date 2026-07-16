@@ -1,7 +1,8 @@
+package com.raphaelbauer.lajolla.cli;
 
 import java.io.File;
 
-import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
@@ -14,9 +15,9 @@ import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
 import com.raphaelbauer.lajolla.scoringfunctions.ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE;
 import com.raphaelbauer.lajolla.transformation.IFileToStringTranslator;
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
-import com.raphaelbauer.lajolla.transformation.rna.etatheta.OptimizedStructureToEtaThetaCharacterTransformer;
-import com.raphaelbauer.lajolla.transformation.rna.etatheta.PDBRNATranslator;
-import com.raphaelbauer.lajolla.transformation.rna.etatheta.RNAEtaThetaMatchRunner;
+import com.raphaelbauer.lajolla.transformation.protein.BetterOptimizedPhiPsiTranslator;
+import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
+import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
 import com.raphaelbauer.lajolla.utilities.SystemOutUtils;
 
 /*
@@ -24,7 +25,7 @@ import com.raphaelbauer.lajolla.utilities.SystemOutUtils;
  * @author raphael.andre.bauer@gmail.com
  *
  */
-public class RNA {
+public class PRO {
 
   /**
    * Main
@@ -33,7 +34,7 @@ public class RNA {
    */
   public static void main(final String[] args) {
 
-		////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // input files or directories:
     ////////////////////////////////////////////////////////////////////////
     String queryDirOrFile = "";
@@ -42,7 +43,7 @@ public class RNA {
 
     String outputDir = "";
 
-		////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // mini tuning...
     ////////////////////////////////////////////////////////////////////////
     boolean dealWithAllModels = false;
@@ -51,29 +52,34 @@ public class RNA {
 
     int numberOfResultsToWriteOut = 1;
 
-		////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     // advanced stuff:
     ////////////////////////////////////////////////////////////////////////
-    int advancedNGramSize = 7;
+    int advancedNGramSize = 18;
 
-		//int advancedAngleDiscretion = 90;
-		//double advancedScoringRadius = 2.0d;
+    //int advancedAngleDiscretion = 90;
+    //double advancedScoringRadius = 2.0d;
     EScoringFunctionRelativeSettings scoringFunctionRelativeSettings
-            = EScoringFunctionRelativeSettings.basedOnSizeOfSmaller;
+            = EScoringFunctionRelativeSettings.basedOnSizeOfQueryWhatIsTheTargetInTMSCORE;
 
     long beginTime = System.currentTimeMillis();
 
     SystemOutUtils.showSplashScreen();
 
-    System.out.println("LaJolla RNA - RNA similarity screening and alignment");
+    System.out.println("LaJolla PRO - Protein similarity screening and alignment");
 
     try {
 
       Options opt = new Options();
 
-      opt
-              .addOption("h", "help", false,
-                      "Print help for this application");
+      opt.addOption(
+              "h",
+              "help",
+              false,
+              "Print help for this application");
+
+      opt.addOption("sm", false,
+              "Score based on smaller structure (symmetric score)");
 
       opt.addOption("t", "target", true, "target pdb file (directory or file)");
 
@@ -86,45 +92,33 @@ public class RNA {
               "Deal with all models (slower) (DEFAULT: "
               + dealWithAllModels + ")");
 
-      opt
-              .addOption("sm", false,
-                      "Score based on smaller structure (symmetric score)");
+      opt.addOption("nr", "numres", true,
+              "Number of results to write out per target found: "
+              + numberOfResultsToWriteOut
+              + ")");
 
       opt.addOption("ref", "minrefinementscore", true,
               "minimum refinement score needed (DEFAULT: "
               + minimumRefinementScore
               + ")");
 
-      opt.addOption("nr", "numres", true,
-              "Number of results to write out per target found: "
-              + numberOfResultsToWriteOut
-              + ")");
-
-//			opt.addOption("za", "anglediscretion", true,
-//					"ADVANCED: discretion angle for phi psi (DEFAULT: " 
-//					+ advancedAngleDiscretion
-//							+ ")");
       opt.addOption("zn", "ngramsize", true,
               "ADVANCED: size of ngram window (DEFAULT: " + advancedNGramSize + ")");
 
-//			opt.addOption("zc", "scoringradius", true,
-//					"ADVANCED: radius taken for final scoring (DEFAULT: " +
-//					advancedScoringRadius
-//					+ ")");
-      BasicParser parser = new BasicParser();
+      DefaultParser parser = new DefaultParser();
       CommandLine cl = parser.parse(opt, args);
 
       // no arguments given => print help:
       if (args.length == 0) {
         //System.out.println("cl get arg list length : " + cl.getArgList().size());
         HelpFormatter f = new HelpFormatter();
-        f.printHelp("java -cp lajolla.jar RNA [options]", opt);
+        f.printHelp("java -cp lajolla.jar com.raphaelbauer.lajolla.cli.PRO [options]", opt);
         System.exit(1);
       }
 
       if (cl.hasOption('h')) {
         HelpFormatter f = new HelpFormatter();
-        f.printHelp("java -cp lajolla.jar RNA [options]", opt);
+        f.printHelp("java -cp lajolla.jar com.raphaelbauer.lajolla.cli.PRO [options]", opt);
         System.exit(1);
       }
 
@@ -151,7 +145,7 @@ public class RNA {
 
         queryDirOrFile = targetDirOfFile;
 
-					//System.exit(1);
+        //System.exit(1);
       } else {
         queryDirOrFile = cl.getOptionValue("q");
 
@@ -187,14 +181,13 @@ public class RNA {
         numberOfResultsToWriteOut = Integer.parseInt(cl.getOptionValue("nr"));
       }
 
-				////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////
       // advanced parameters:
       ////////////////////////////////////////////////////////////////
 //				if (cl.hasOption("za")) {
 //
 //					advancedAngleDiscretion = Integer.parseInt(cl.getOptionValue("za"));
 //				}
-//				
       if (cl.hasOption("zn")) {
 
         advancedNGramSize = Integer.parseInt(cl.getOptionValue("zn"));
@@ -204,8 +197,12 @@ public class RNA {
 //
 //					advancedScoringRadius = Integer.parseInt(cl.getOptionValue("zc"));
 //				}
+      // /////////////////////////////////////////////////////////////
+      // start it:
+      // execute();
+      // STEP 1: build the index - the sequence db:
       IResidueToStringTransformer iResidueToStringTransformer
-              = new OptimizedStructureToEtaThetaCharacterTransformer();
+              = new BetterOptimizedPhiPsiTranslator();
 
       IScoringFunction scoringFunction
               = new ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE(
@@ -215,14 +212,13 @@ public class RNA {
               = new NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults();
 
       IFileToStringTranslator iFileToStringTranslator
-              = new PDBRNATranslator(
+              = new PDBProteinTranslator(
                       iResidueToStringTransformer,
                       !dealWithAllModels,
                       scoringFunction,
-                      nGramTo3DTranslator
-              );
+                      nGramTo3DTranslator);
 
-      RNAEtaThetaMatchRunner.executeSearch(
+      ProteinMatchRunner.executeSearch(
               advancedNGramSize,
               iFileToStringTranslator,
               iResidueToStringTransformer,
@@ -233,7 +229,8 @@ public class RNA {
               minimumRefinementScore,
               numberOfResultsToWriteOut);
 
-      long completeTimeInSecs = (System.currentTimeMillis() - beginTime) / 1000;
+      long completeTimeInSecs
+              = (System.currentTimeMillis() - beginTime) / 1000;
 
       String formattedCompleteTimeTakenInHHMMSS = String
               .format("%1$02d:%2$02d:%3$02d", completeTimeInSecs

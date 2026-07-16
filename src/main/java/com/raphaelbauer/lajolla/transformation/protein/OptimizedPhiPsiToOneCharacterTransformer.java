@@ -16,12 +16,12 @@ package com.raphaelbauer.lajolla.transformation.protein;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.biojava.bio.structure.AminoAcid;
-import org.biojava.bio.structure.Calc;
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.Group;
-import org.biojava.bio.structure.Structure;
-import org.biojava.bio.structure.StructureException;
+import org.biojava.nbio.structure.AminoAcid;
+import org.biojava.nbio.structure.Calc;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.Group;
+import org.biojava.nbio.structure.Structure;
+import org.biojava.nbio.structure.StructureException;
 
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
 
@@ -114,7 +114,7 @@ public class OptimizedPhiPsiToOneCharacterTransformer
   public final String getStringFromResidues(final List<Group> aminos) {
 
     // for the return...
-    StringBuffer translatedAngleSeq = new StringBuffer();
+    StringBuilder translatedAngleSeq = new StringBuilder();
 
     // expected lengt
     int aminoLength = aminos.size();

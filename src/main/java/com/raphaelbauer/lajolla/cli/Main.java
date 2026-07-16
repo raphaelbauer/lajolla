@@ -1,3 +1,5 @@
+package com.raphaelbauer.lajolla.cli;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -29,11 +31,11 @@ public class Main {
             + "to generate alignments for Proteins and for RNAs. \n\n"
             + "Try the follwing: \n\n"
             + "1. alignment of protein structures: \n"
-            + "   type in: java -cp lajolla.jar PRO -h\n"
+            + "   type in: java -cp lajolla.jar com.raphaelbauer.lajolla.cli.PRO -h\n"
             + "2. alignment of RNAs via suite codes: \n"
-            + "   type in: java -cp lajolla.jar RNASuite -h\n"
+            + "   type in: java -cp lajolla.jar com.raphaelbauer.lajolla.cli.RNASuite -h\n"
             + "3. alignment of RNAs via eta theta dihedral angles: \n"
-            + "   type in: java -cp lajolla.jar RNA -h\n"
+            + "   type in: java -cp lajolla.jar com.raphaelbauer.lajolla.cli.RNA -h\n"
             + "\n"
             + "\n"
             + "More infos: http://lajolla.sf.net");

@@ -13,9 +13,11 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -36,7 +38,7 @@ import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
  * @author ra
  *
  */
-public class TMAlignTest extends TestCase {
+public class TMAlignTest {
 	
 	
 	static INGramTo3DTranslator ngramTo3DTranslator
@@ -60,6 +62,7 @@ public class TMAlignTest extends TestCase {
 	
 
 
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignmenQuery1PQ0Target1g5j() {
 	
 		String tempDir = "src/test/tmp"; 

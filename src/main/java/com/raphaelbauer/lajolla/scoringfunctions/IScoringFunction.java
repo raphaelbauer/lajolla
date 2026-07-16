@@ -2,8 +2,8 @@ package com.raphaelbauer.lajolla.scoringfunctions;
 
 import java.util.List;
 
-import org.biojava.bio.structure.Atom;
-import org.biojava.bio.structure.Chain;
+import org.biojava.nbio.structure.Atom;
+import org.biojava.nbio.structure.Chain;
 
 import com.raphaelbauer.lajolla.container.ScoreContainer;
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;

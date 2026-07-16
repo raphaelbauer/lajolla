@@ -13,10 +13,12 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 import java.util.BitSet;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -29,7 +31,7 @@ import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
 import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class AlignmentAstrald15711Test extends TestCase {
+public class AlignmentAstrald15711Test {
 
   static String tempDir = "src/test/tmp";
 
@@ -41,6 +43,7 @@ public class AlignmentAstrald15711Test extends TestCase {
           = new ScoreAccordingToScoringAtomDistanceOnlyIfNGramsAreSimilarFastNotIdealAndBasedOnTMSCORE(
                   EScoringFunctionRelativeSettings.basedOnSizeOfQueryWhatIsTheTargetInTMSCORE);
 
+  @Test
   public void testAllAgainstAll() {
 
     int ngramSize = 15;

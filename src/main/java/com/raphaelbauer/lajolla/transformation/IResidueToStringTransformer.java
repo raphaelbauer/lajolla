@@ -2,7 +2,7 @@ package com.raphaelbauer.lajolla.transformation;
 
 import java.util.List;
 
-import org.biojava.bio.structure.Group;
+import org.biojava.nbio.structure.Group;
 
 public interface IResidueToStringTransformer {
 

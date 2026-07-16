@@ -1,8 +1,10 @@
 package com.raphaelbauer.lajolla.nouveau.rna.optimizedetatheta;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
@@ -14,7 +16,7 @@ import com.raphaelbauer.lajolla.transformation.rna.etatheta.PDBRNATranslator;
 import com.raphaelbauer.lajolla.transformation.rna.etatheta.RNAEtaThetaMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class RNAtRNAAlignment1B231J1UTest extends TestCase {
+public class RNAtRNAAlignment1B231J1UTest {
 
   static String tempDir = "src/test/tmp/";
 
@@ -27,6 +29,7 @@ public class RNAtRNAAlignment1B231J1UTest extends TestCase {
   static INGramTo3DTranslator ngramTo3DTranslator
           = new NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults();
 
+  @Test
   public void testIdenticalMatchAndSearchAndAlignment1B231J1U() {
 
     int ngramSize = 5;
@@ -75,6 +78,7 @@ public class RNAtRNAAlignment1B231J1UTest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testIdenticalMatchAndSearchAndAlignment1J1U1B23() {
 
     int ngramSize = 5;

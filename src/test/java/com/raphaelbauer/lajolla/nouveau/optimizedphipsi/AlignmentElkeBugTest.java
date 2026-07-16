@@ -13,10 +13,12 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -45,7 +47,7 @@ import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
  * @author ra
  *
  */
-public class AlignmentElkeBugTest extends TestCase{
+public class AlignmentElkeBugTest{
 	
 	static IResidueToStringTransformer iResidueToStringTransformer
 		//= new OptimizedPhiPsiToOneCharacterTransformer();
@@ -62,6 +64,7 @@ public class AlignmentElkeBugTest extends TestCase{
 
 
 	
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignmenQuery1PQ0Target1g5j() {
 	
 		
@@ -150,6 +153,7 @@ public class AlignmentElkeBugTest extends TestCase{
 	
 	
 	
+	@Test
 	public void testIdenticalMatchAndSearchAndAlignmenQuery1g5jTarget1PQ0() {
 	
 		

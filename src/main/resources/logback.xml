@@ -1,14 +1,25 @@
 <configuration>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <!-- encoders are assigned the type
-         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+  <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- Log to stderr so library logging does not interleave with the tool's
+         own results, which are printed to stdout. -->
+    <target>System.err</target>
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
 
-  <root level="debug">
-    <appender-ref ref="STDOUT" />
+  <!-- BioJava logs a lot at DEBUG/INFO while parsing structures; keep it quiet
+       so it does not drown the alignment output. Raise to DEBUG when
+       diagnosing structure-parsing issues. -->
+  <logger name="org.biojava" level="INFO" />
+
+  <!-- ChainImpl emits WARN noise ("residue with same residue number is already
+       present") for fixtures/structures with duplicated residue numbers. This
+       is harmless for our use, so silence it (WARN < ERROR would still show). -->
+  <logger name="org.biojava.nbio.structure.ChainImpl" level="ERROR" />
+
+  <root level="INFO">
+    <appender-ref ref="STDERR" />
   </root>
 </configuration>

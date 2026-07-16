@@ -13,9 +13,11 @@
  */
 package com.raphaelbauer.lajolla.nouveau.optimizedphipsi;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.EScoringFunctionRelativeSettings;
@@ -28,7 +30,7 @@ import com.raphaelbauer.lajolla.transformation.protein.PDBProteinTranslator;
 import com.raphaelbauer.lajolla.transformation.protein.ProteinMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class AlignmentNaturePaperSuperfamilyApoHoloTest extends TestCase {
+public class AlignmentNaturePaperSuperfamilyApoHoloTest {
 	
 	static String tempDir = "src/test/tmp";
 	
@@ -57,6 +59,7 @@ public class AlignmentNaturePaperSuperfamilyApoHoloTest extends TestCase {
 	 * 
 	 */
 	
+@Test
 public void testAllAgainstAll() {
 
 		int ngramSize = 17;

@@ -1,8 +1,10 @@
 package com.raphaelbauer.lajolla.nouveau.rna.optimizedetatheta;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
@@ -14,7 +16,7 @@ import com.raphaelbauer.lajolla.transformation.rna.etatheta.PDBRNATranslator;
 import com.raphaelbauer.lajolla.transformation.rna.etatheta.RNAEtaThetaMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class RNAReadinAntiBug extends TestCase {
+public class RNAReadinAntiBugTest {
 
   static String tempDir = "src/test/tmp/";
 
@@ -35,6 +37,7 @@ public class RNAReadinAntiBug extends TestCase {
    *
    *
    */
+  @Test
   public void testAntiBug() {
 
     int ngramSize = 10;

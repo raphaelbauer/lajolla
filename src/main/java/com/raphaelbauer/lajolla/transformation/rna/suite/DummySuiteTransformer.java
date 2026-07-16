@@ -15,7 +15,7 @@ package com.raphaelbauer.lajolla.transformation.rna.suite;
 
 import java.util.List;
 
-import org.biojava.bio.structure.Group;
+import org.biojava.nbio.structure.Group;
 
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
 

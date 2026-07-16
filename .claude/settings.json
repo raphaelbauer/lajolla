@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn -B test)",
+      "Bash(grep -vE '\\(Test|Tests|TestCase\\)\\\\.java$')",
+      "Bash(git ls-tree *)",
+      "Bash(mvn -q clean test)",
+      "Bash(awk '{t+=$3+0} END{print \"reports found\"}')",
+      "Bash(awk -F'[: ]+' '{sum+=$4} END {print \"TOTAL test methods run across classes:\", sum}')",
+      "Bash(mvn -q test -Dtest='RNAReadinAntiBug,RNASuiteAlignmentT2V48est')",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(awk -F'[:,]' '{r+=$2; f+=$4; e+=$6; s+=$8} END{print \"run=\"r\" failures=\"f\" errors=\"e\" skipped=\"s}')"
+    ]
+  }
+}

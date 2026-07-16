@@ -2,9 +2,9 @@ package com.raphaelbauer.lajolla.transformation.protein;
 
 import java.util.List;
 
-import org.biojava.bio.structure.Group;
-import org.biojava.bio.structure.HetatomImpl;
-import org.biojava.bio.structure.StructureException;
+import org.biojava.nbio.structure.Group;
+import org.biojava.nbio.structure.HetatomImpl;
+import org.biojava.nbio.structure.StructureException;
 
 import com.raphaelbauer.lajolla.transformation.IResidueToStringTransformer;
 import com.raphaelbauer.lajolla.utilities.Utility;

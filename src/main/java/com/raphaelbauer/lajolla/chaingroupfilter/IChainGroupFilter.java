@@ -1,6 +1,6 @@
 package com.raphaelbauer.lajolla.chaingroupfilter;
 
-import org.biojava.bio.structure.Chain;
+import org.biojava.nbio.structure.Chain;
 
 public interface IChainGroupFilter {
 	

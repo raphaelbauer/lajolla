@@ -1,8 +1,10 @@
 package com.raphaelbauer.lajolla.nouveau.rna.optimizedetatheta;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 
-import junit.framework.TestCase;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.INGramTo3DTranslator;
 import com.raphaelbauer.lajolla.ngramto3dtranslators.NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults;
 import com.raphaelbauer.lajolla.scoringfunctions.IScoringFunction;
@@ -14,7 +16,7 @@ import com.raphaelbauer.lajolla.transformation.rna.etatheta.PDBRNATranslator;
 import com.raphaelbauer.lajolla.transformation.rna.etatheta.RNAEtaThetaMatchRunner;
 import com.raphaelbauer.lajolla.utilities.DeleteDirRecursively;
 
-public class PaperSARSATest extends TestCase {
+public class PaperSARSATest {
 
   static String tempDir = "src/test/tmp/";
 
@@ -27,6 +29,7 @@ public class PaperSARSATest extends TestCase {
   static INGramTo3DTranslator ngramTo3DTranslator
           = new NGramToStringTranslatorBasedOnSingleMatchingNGramsManyResults();
 
+  @Test
   public void testPairwiseglobal1() {
 
     int ngramSize = 10;
@@ -85,6 +88,7 @@ public class PaperSARSATest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testPairwiseglobal2() {
 
     int ngramSize = 10;
@@ -136,6 +140,7 @@ public class PaperSARSATest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testPairwiseSemiglobal() {
 
 	//IScoringFunction scoringFunction 
@@ -195,6 +200,7 @@ public class PaperSARSATest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testPairwiseLocalStructureAlignment() {
 
 	//IScoringFunction scoringFunction 
@@ -251,6 +257,7 @@ public class PaperSARSATest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testPairwiseNormalizedLocalStructureAlignment() {
 
     int ngramSize = 5;
@@ -302,6 +309,7 @@ public class PaperSARSATest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testMultipleAlignmentTRNA() {
 
     int ngramSize = 10;
@@ -358,6 +366,7 @@ public class PaperSARSATest extends TestCase {
     //DeleteDirRecursively.deleteDir(new File(tempDir));
   }
 
+  @Test
   public void testMultipleAlignmentPseudoknots() {
 
     int ngramSize = 6;

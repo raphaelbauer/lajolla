@@ -3,114 +3,148 @@
   <groupId>ra.lajolla</groupId>
   <artifactId>lajolla</artifactId>
   <packaging>jar</packaging>
-  <version>2.2.1</version>
+  <version>3.0.0</version>
   <name>lajolla</name>
-  <url>http://maven.apache.org</url>
-  
+  <url>https://raphaelbauer.github.io/lajolla/</url>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>25</maven.compiler.release>
+
+    <biojava.version>7.2.2</biojava.version>
+    <commons-cli.version>1.11.0</commons-cli.version>
+    <slf4j.version>2.0.17</slf4j.version>
+    <logback.version>1.5.18</logback.version>
+    <log4j.version>2.23.1</log4j.version>
+    <junit.version>5.12.2</junit.version>
+
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+    <maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
   </properties>
-  
-  <repositories>
-    <repository>
-      <id>biojava</id>
-      <url>http://biojava.org/download/maven/</url>
-    </repository>
-  </repositories>
-  
-  
+
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-		
     <dependency>
       <groupId>commons-cli</groupId>
       <artifactId>commons-cli</artifactId>
-      <version>1.1</version>
-      <scope>compile</scope>
+      <version>${commons-cli.version}</version>
     </dependency>
-		
+
+    <!-- BioJava ships a Log4j2 backend by default; we exclude it and route all
+         logging through SLF4J -> Logback (this project ships logback.xml). -->
     <dependency>
       <groupId>org.biojava</groupId>
-      <artifactId>biojava3-core</artifactId>
-      <version>3.0.7</version>
-      <scope>compile</scope>
-    </dependency>
-                
-    <dependency>
-      <groupId>org.biojava</groupId>
-      <artifactId>biojava3-structure</artifactId>
-      <version>3.0.7</version>
-      <scope>compile</scope>
+      <artifactId>biojava-core</artifactId>
+      <version>${biojava.version}</version>
       <exclusions>
         <exclusion>
-          <artifactId>log4j-core</artifactId>
           <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j2-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
-    
+
+    <dependency>
+      <groupId>org.biojava</groupId>
+      <artifactId>biojava-structure</artifactId>
+      <version>${biojava.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j2-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.1.1</version>
+      <version>${logback.version}</version>
     </dependency>
-    
+
+    <!-- Bridge: any Log4j2 API calls (e.g. from BioJava) are forwarded to SLF4J. -->
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>log4j-over-slf4j</artifactId>
-      <version>1.7.6</version>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-to-slf4j</artifactId>
+      <version>${log4j.version}</version>
+      <scope>runtime</scope>
     </dependency>
-		
-		
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-  
-  
+
   <build>
-    
     <resources>
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
       </resource>
     </resources>
-      
 
     <plugins>
-      <!-- use java 1.5 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
+        <version>${maven-compiler-plugin.version}</version>
       </plugin>
-			
-			
-			
+
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven-assembly-plugin.version}</version>
         <configuration>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>    
-          
+          </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>Main</mainClass>
+              <mainClass>com.raphaelbauer.lajolla.cli.Main</mainClass>
             </manifest>
           </archive>
-          
         </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
-      
     </plugins>
   </build>
-  
+
 </project>

@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.biojava.bio.structure.Chain;
-import org.biojava.bio.structure.ChainImpl;
-import org.biojava.bio.structure.Group;
-import org.biojava.bio.structure.Structure;
-import org.biojava.bio.structure.StructureException;
-import org.biojava.bio.structure.io.PDBFileParser;
-import org.biojava.bio.structure.io.PDBFileReader;
-import org.biojava3.core.util.InputStreamProvider;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.ChainImpl;
+import org.biojava.nbio.structure.Group;
+import org.biojava.nbio.structure.Structure;
+import org.biojava.nbio.structure.StructureException;
+import org.biojava.nbio.structure.io.PDBFileParser;
+import org.biojava.nbio.structure.io.PDBFileReader;
+import org.biojava.nbio.core.util.InputStreamProvider;
 
 import com.raphaelbauer.lajolla.PDBInfo;
 
@@ -107,7 +107,7 @@ public class SwissKnife {
 			//// there is a bug as struc.getChainByPDB( does NOT return
         // all hetatoms (after TER are neglected..
         // so 
-        returnChain = struc.getChainByPDB(pdbInfo.getChainID(), pdbInfo.getModelNr());
+        returnChain = struc.getPolyChainByPDB(pdbInfo.getChainID(), pdbInfo.getModelNr());
 			//System.out.println("swissknife says: " + returnChain.getAtomLength());
 
 			//if (struc.hasChain(pdbInfo.getChainID()) {
@@ -126,7 +126,6 @@ public class SwissKnife {
 //						
 //					} catch (NumberFormatException e) {
 //
-//						// TODO Auto-generated catch block
 //						
 //						
 //						//e.printStackTrace();
@@ -154,16 +153,15 @@ public class SwissKnife {
 //					
 //				}
 			//}
-      } catch (StructureException e) {
-			// TODO Auto-generated catch block
-        //e.printStackTrace();
+      } catch (RuntimeException e) {
+        // getPolyChainByPDB may fail for a missing chain/model; leave
+        // returnChain null and let the caller handle it.
       }
 
       bis.close();
       inStream.close();
 
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
@@ -212,10 +210,8 @@ public class SwissKnife {
       fr.close();
 
     } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } finally {
 
